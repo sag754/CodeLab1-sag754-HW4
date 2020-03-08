@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public int coins = 0;
+    public float Score = 0;
 
     public Rigidbody2D rb;
     public Animator animator;
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         { //if the instance is already set to an object
             Destroy(gameObject); //destroy this new object, so there is only ever one
         }
+
     }
 
     // Start is called before the first frame update
