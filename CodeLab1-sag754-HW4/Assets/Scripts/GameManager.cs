@@ -12,60 +12,33 @@ public class GameManager : MonoBehaviour
     public Text infoTime;
     public Text infoRecord;
 
-    private float timer = 0; //keep track of time
-    private int coins = 0;
-
-    private const string PLAY_PREF_KEY_CS = "Coins: ";
-    private const string PLAY_PREF_KEY_TM = "Time: ";
-
-    private const string FILE_CS = "/Fantasy-Game-records.txt";
     private const string FILE_ALL_RECORDS = "/All_records.txt";
 
-    //Property
-    public float Timer
+    public float timer = 0; //start timer at 0 and keeps track of time
+
+    public bool playing = true;
+
+    private float score = 0;
+
+
+    //.........................PROPERTY FOR SCORE
+    public float Score
     {
         get
         {
-            return timer;
+            return score;
         }
         set
         {
-            timer = value;
-            if (timer < fastestTime)
-            {
-                fastestTime = timer;
-            }
+            score = value;
         }
     }
+    //.........................END PROPERTY FOR SCORE
 
-    private float fastestTime = 0;
+    public List<string> highScoreNames;
+    public List<float> highScoreNums;
 
-    private float FastestTime
-    {
-        get
-        {
-            return fastestTime;
-        }
-        set
-        {
-            fastestTime = value;
-            //Save it somewhere
-            //PlayerPrefs.SetInt(PLAY_PREF_KEY_HS, highScore);
-            File.WriteAllText(Application.dataPath + FILE_CS, fastestTime + "");
-
-
-            allRecords.Add(fastestTime);
-
-            string allRecordsString = "";
-            for (int i = 0; i < allRecords.Count; i++)
-            {
-                allRecordsString = allRecordsString + allRecords[i] + ",";
-            }
-            File.WriteAllText(Application.dataPath + FILE_ALL_RECORDS, allRecordsString);
-        }
-    }
-
-    private List<float> allRecords = new List<float>();
+    //..........................SINGLETON
 
     private void Awake()
     {
@@ -80,33 +53,97 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //..........................END SINGLETON
+    //.........................WRITES TO FILE
+
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Application.dataPath);
+        highScoreNames = new List<string>(); //init highScoreNames
+        highScoreNums = new List<float>();  //init highScoreNums
 
-        if (File.Exists(Application.dataPath + FILE_CS))
+        if (File.Exists(Application.dataPath + FILE_ALL_RECORDS)) //if the high score file exists
         {
-            string csString = File.ReadAllText(Application.dataPath + FILE_CS);
+            string fileContents = File.ReadAllText(Application.dataPath + FILE_ALL_RECORDS); //get the contents of the file
 
-            print(csString);
-            string[] splitString = csString.Split(',');
-            fastestTime = int.Parse(splitString[0]);
+            string[] scorePairs = fileContents.Split('\n'); //split it on the newline, making each space in the array a line in the file
 
-            for (int i = 0; i < splitString.Length; i++)
+            for (int i = 0; i < 10; i++)
+            { //loop through the 10 scores
+                string[] nameScores = scorePairs[i].Split(' '); //split each line on the space
+                highScoreNames.Add(nameScores[0]); //the first part of the split is the name
+                highScoreNums.Add(float.Parse(nameScores[1])); //the second part is the value
+            }
+        }
+        else //if the high score file doesn't exist
+        {
+            for (int i = 0; i < 10; i++) //create a new default high score list
             {
-                print(splitString[i]);
+                highScoreNames.Add("AAA");
+                highScoreNums.Add(100 + i * 10);
             }
         }
 
+        Debug.Log(Application.dataPath);
+
+        infoText = GetComponentInChildren<Text>(); //get the text component from the children of this gameObject
     }
+
+    //.........................ENDS WRITES TO FILE
+    //.........................TIMER AND INFO TEXT
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
-        infoText.text = "Coins x " + PlayerController.instance.coins;
+        infoText.text = "Coins x " + PlayerController.instance.Score;
         infoTime.text = "Time: " + (int)timer;
-        infoRecord.text = "Best Time: " + fastestTime;
+        infoRecord.text = "Best Time: " + highScoreNums[0];
+    }
+
+    //.........................END TIMER AND INFO TEXT
+    //.........................UPDATES HIGH SCORE/RECORD LIST
+
+    //function that updates the high score list
+    public void UpdateHighScores()
+    {
+
+        bool newRecord = false; //by default, we don't have new high score
+
+        for (int i = 0; i < highScoreNums.Count; i++)
+        { //go through all the high scores
+            if (highScoreNums[i] > timer)
+            { //if we have a time that is lower than one of the high scores
+                highScoreNums.Insert(i, timer); //insert this new score into the value list
+                highScoreNames.Insert(i, "NEW"); //give it the name "NEW"
+                newRecord = true; //we have a new high score
+                break; //leave the for loop
+            }
+        }
+
+        if (newRecord)
+        { //if we have a new high score
+            highScoreNums.RemoveAt(highScoreNums.Count - 1); //remove the final high score value so we are back down to 10
+            highScoreNames.RemoveAt(10);
+        }
+
+        string fileContents = ""; //create a new string to insert into the file
+
+        for (int i = 0; i < highScoreNames.Count; i++)
+        { //loop through all the high scores
+            fileContents += highScoreNames[i] + " " + highScoreNums[i] + "\n"; //build a string for all the high scores in the lists
+        }
+
+        File.WriteAllText(Application.dataPath + FILE_ALL_RECORDS, fileContents); //save the list to the file
+    }
+
+    //.........................END UPDATES HIGH SCORE/RECORD LIST
+    //.........................RESET GAME VALUES
+
+    //reset the important values when the game restarts
+    public void Reset()
+    {
+        timer = 0;
+        PlayerController.instance.Score = 0;
     }
 }
