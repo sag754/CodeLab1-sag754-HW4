@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelReturner : MonoBehaviour
 {
-    public static int currentLevel = 1;
 
     public static LevelReturner instance;
 
@@ -23,7 +22,7 @@ public class LevelReturner : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) //If another GameObject with a 2D Collider on it hits this GameObject's collider
     {
-        currentLevel--;
-        SceneManager.LoadScene(currentLevel);
+        LevelForwarder.currentLevel--;
+        SceneManager.LoadScene(LevelForwarder.currentLevel);
     }
 }

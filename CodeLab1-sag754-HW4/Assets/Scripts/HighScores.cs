@@ -9,9 +9,9 @@ public class HighScores : MonoBehaviour
     public Text highScoreText;
 
     string highScoreTemplate =
-        "Your Score: \n" +
+        "Your Time: \n" +
         "<score>\n\n" +
-        "High Score:\n" +
+        "Best Times:\n" +
         "<highScores>";
 
     // Start is called before the first frame update

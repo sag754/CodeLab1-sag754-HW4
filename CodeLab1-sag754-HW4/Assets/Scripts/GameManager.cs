@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         timer += Time.deltaTime;
         infoText.text = "Coins x " + PlayerController.instance.Score;
         infoTime.text = "Time: " + (int)timer;
-        infoRecord.text = "Best Time: " + highScoreNums[0];
+        infoRecord.text = "Best Time: " + highScoreNums;
     }
 
     //.........................END TIMER AND INFO TEXT

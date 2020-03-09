@@ -3843,26 +3843,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8759436740455264116, guid: d82fa6627b21d1841b2f72472d539576,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8759436740455264116, guid: d82fa6627b21d1841b2f72472d539576,
-        type: 3}
-      propertyPath: BypassListenerEffects
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8759436740455264116, guid: d82fa6627b21d1841b2f72472d539576,
-        type: 3}
-      propertyPath: BypassReverbZones
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8759436740455264116, guid: d82fa6627b21d1841b2f72472d539576,
-        type: 3}
-      propertyPath: Loop
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -2880070466946696055, guid: d82fa6627b21d1841b2f72472d539576,
         type: 3}
       propertyPath: source
@@ -3871,12 +3851,12 @@ PrefabInstance:
     - target: {fileID: 690224689358105129, guid: d82fa6627b21d1841b2f72472d539576,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8916098
+      value: 2.39
       objectReference: {fileID: 0}
     - target: {fileID: 690224689358105129, guid: d82fa6627b21d1841b2f72472d539576,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5106205
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 690224689358105129, guid: d82fa6627b21d1841b2f72472d539576,
         type: 3}
@@ -3943,8 +3923,7 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -8759436740455264116, guid: d82fa6627b21d1841b2f72472d539576, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d82fa6627b21d1841b2f72472d539576, type: 3}
 --- !u!1 &1341863154
 GameObject:
@@ -4992,6 +4971,10 @@ MonoBehaviour:
   infoText: {fileID: 710861587}
   infoTime: {fileID: 1960890395}
   infoRecord: {fileID: 1831938041}
+  timer: 0
+  playing: 1
+  highScoreNames: []
+  highScoreNums: []
 --- !u!1 &1831938040
 GameObject:
   m_ObjectHideFlags: 0
