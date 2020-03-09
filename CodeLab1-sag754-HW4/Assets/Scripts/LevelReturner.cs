@@ -5,22 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelReturner : MonoBehaviour
 {
-    public static int currentLevel = 0;
+    public static int currentLevel = 1;
 
     public static LevelReturner instance;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +23,7 @@ public class LevelReturner : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) //If another GameObject with a 2D Collider on it hits this GameObject's collider
     {
-        currentLevel++;
+        currentLevel--;
         SceneManager.LoadScene(currentLevel);
     }
 }

@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 
             string[] scorePairs = fileContents.Split('\n'); //split it on the newline, making each space in the array a line in the file
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             { //loop through the 10 scores
                 string[] nameScores = scorePairs[i].Split(' '); //split each line on the space
                 highScoreNames.Add(nameScores[0]); //the first part of the split is the name
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         }
         else //if the high score file doesn't exist
         {
-            for (int i = 0; i < 10; i++) //create a new default high score list
+            for (int i = 0; i < 5; i++) //create a new default high score list
             {
                 highScoreNames.Add("AAA");
                 highScoreNums.Add(100 + i * 10);
@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(Application.dataPath);
 
-        infoText = GetComponentInChildren<Text>(); //get the text component from the children of this gameObject
     }
 
     //.........................ENDS WRITES TO FILE
@@ -115,7 +114,7 @@ public class GameManager : MonoBehaviour
             if (highScoreNums[i] > timer)
             { //if we have a time that is lower than one of the high scores
                 highScoreNums.Insert(i, timer); //insert this new score into the value list
-                highScoreNames.Insert(i, "NEW"); //give it the name "NEW"
+                highScoreNames.Insert(i, "TOP"); //give it the name "TOP"
                 newRecord = true; //we have a new high score
                 break; //leave the for loop
             }
@@ -124,7 +123,7 @@ public class GameManager : MonoBehaviour
         if (newRecord)
         { //if we have a new high score
             highScoreNums.RemoveAt(highScoreNums.Count - 1); //remove the final high score value so we are back down to 10
-            highScoreNames.RemoveAt(10);
+            highScoreNames.RemoveAt(5);
         }
 
         string fileContents = ""; //create a new string to insert into the file
