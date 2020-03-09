@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -58,7 +59,14 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Coin"))
         {
+            Score++;
+            Debug.Log("Score: " + Score);
             source.Play();
+
+            if (Score >= 5)
+            {
+                SceneManager.LoadScene(3);
+            }
         }
     }
 }

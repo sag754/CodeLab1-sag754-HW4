@@ -44,7 +44,8 @@ public class HighScores : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         { //if you press space
             GameManager.instance.Reset(); //reset the vars
-            SceneManager.LoadScene("Level1"); //restart the game
+            SceneManager.LoadScene(0); //restart the game
+            //PlayerController.instance.transform();
         }
     }
 }
